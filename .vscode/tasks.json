@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+  "label": "Run app.py",
+  "type": "shell",
+  "command": ".\\.venv\\Scripts\\python.exe F:/Code/Exam_assistance/Exam_assistance_backend/app.py",
+  "options": {
+    "shell": {
+      "executable": "C:\\Windows\\System32\\cmd.exe",
+      "args": ["/c"]  // 告诉 cmd 执行后退出
+    }
+  },
+  "problemMatcher": [],
+  "group": "build"
+}
+
+  ]
+}
