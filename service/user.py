@@ -23,7 +23,7 @@ class UserService:
             res = add_user(user)
             if isinstance(res, Exception):
                 return Response.SEVER_ERROR(res)
-            return Response.SUCCESS(data)
+            return Response.SUCCESS(f"成功注册用户{data}")
         except Exception as e:
             return Response.SEVER_ERROR(e)
         
@@ -34,7 +34,7 @@ class UserService:
                 return Response.SEVER_ERROR(user)
             if not user: 
                 return Response.NOT_FOUND("用户不存在")
-            return Response.SUCCESS(user)
+            return Response.SUCCESS(f"用户登录成功{user}")
         except Exception as e:
             return Response.SEVER_ERROR(e)
         
@@ -58,7 +58,7 @@ class UserService:
                 return Response.NOT_FOUND("用户不存在")
             if isinstance(res, Exception):
                 return Response.SEVER_ERROR(res)
-            return Response.SUCCESS(res)
+            return Response.SUCCESS(f"用户更新成功{res}")
         except Exception as e:
             return Response.SEVER_ERROR(e)
     def getUserList(self,filters:dict,page:int = None,page_size:int = None):
@@ -68,7 +68,7 @@ class UserService:
                 return Response.NOT_FOUND("没有用户符合条件")
             if isinstance(user, Exception):
                 return Response.SEVER_ERROR(user)
-            return Response.SUCCESS(user)
+            return Response.SUCCESS(f"用户查询成功{user}")
         except Exception as e:
             return Response.SEVER_ERROR(e)
 
