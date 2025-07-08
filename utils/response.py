@@ -25,6 +25,6 @@ class Response:
         return Response(500, "internal server error",str(e) if e else None).to_dict()
     
     @staticmethod
-    def NOT_FOUND():
+    def NOT_FOUND(string):
         """资源未找到"""
-        return Response(404, "resource not found").to_dict()
+        return Response(404, f"{string}").to_dict()
