@@ -1,4 +1,4 @@
-from __init__ import *
+from entity import *
 
 class Plan(db.Model):
     """ 计划表
@@ -13,22 +13,22 @@ class Plan(db.Model):
     
        """
     __tablename__ = 'plan'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.String(100), nullable=True)
-    create_time = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    id = db.Column(db.Integer, primary_key=True)
+    planname = db.Column(db.String(100,collation='utf8mb4_general_ci'), nullable=False)
+    description = db.Column(db.String(100,collation='utf8mb4_general_ci'), nullable=True)
+    create_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
     finished = db.Column(db.Boolean, nullable=False, default=False)
-    update_time = db.Column(db.DateTime, nullable=False, default=datetime.now())
-    deal_time = db.Column(db.DateTime, nullable=False, default=datetime.now())
-    begin_time = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    update_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
+    deal_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
+    begin_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
 
     def __repr__(self):
-        return '<Plan %r>' % self.name
+        return '<Plan %r>' % self.id
     
     def to_dict(self):
         return {
             'id': self.id,
-            'name': self.name,
+            'planname': self.planname,
             'description': self.description,
             'finished': self.finished,
             'begin_time': self.begin_time,  

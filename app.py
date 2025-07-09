@@ -14,4 +14,4 @@ if __name__ == '__main__':
     # 数据库迁移用：首次运行先创建表
     with app.app_context():
         db.create_all()
-    app.run()
+    app.run(debug=True, use_reloader=True)

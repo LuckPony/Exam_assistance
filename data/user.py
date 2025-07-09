@@ -6,7 +6,7 @@ def add_user(user):
     try:
         db.session.add(user)
         db.session.commit()
-        return True
+        return user
     except Exception as e:
         return e
     

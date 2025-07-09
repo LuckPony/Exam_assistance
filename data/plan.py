@@ -13,10 +13,10 @@ def delete_plan(id):
     try:
         plan = Plan.query.filter_by(id=id).first()
         if not plan:
-            return False    
+            return None    
         db.session.delete(plan)
         db.session.commit()
-        return plan.todict()
+        return True
     except Exception as e:
         return e
     
@@ -28,9 +28,9 @@ def update_plan(plan):
         for key,value in plan.to_dict().items():
             if hasattr(plan,key) and getattr(plan,key):
                 setattr(update_plan,key,value)
-        update_plan.update_time = datetime.now()
+        update_plan.update_time = datetime.datetime.now()
         db.session.commit()
-        return plan.todict()
+        return plan.to_dict()
     except Exception as e:
         return e
     

@@ -20,10 +20,13 @@ class UserService:
     def register(self, data):
         try:
             user = self.create_user_object(data)
+            
             res = add_user(user)
             if isinstance(res, Exception):
                 return Response.SEVER_ERROR(res)
-            return Response.SUCCESS(f"成功注册用户{data}")
+            print("测试一下")
+            print(user)
+            return Response.SUCCESS(f"成功注册用户{user.to_dict()}")
         except Exception as e:
             return Response.SEVER_ERROR(e)
         
@@ -43,7 +46,7 @@ class UserService:
             res = delete_user(id)
             if isinstance(res, Exception):
                 return Response.SEVER_ERROR(res)
-            if res == False: 
+            if not res: 
                 return Response.NOT_FOUND("用户不存在")
             return Response.SUCCESS(f"成功删除id为{id}的用户")
         except Exception as e:
