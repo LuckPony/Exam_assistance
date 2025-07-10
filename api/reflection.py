@@ -6,19 +6,13 @@ from utils.response import Response
 
 reflection_ns = Namespace('api/reflection', description='反思记录管理')
 
-reflection_model = reflection_ns.model('add', {
-    'content': fields.String(required=True, description='反思内容'),
-    'plan_id': fields.Integer(required=True, description='反思的计划ID'),
-})
-update_model = reflection_ns.model('update', {
-    'id': fields.Integer(required=True, description='反思记录ID'),
+reflection_model = reflection_ns.model('reflection', {
+    'id': fields.Integer(required=False,default = 0, description='反思记录ID'),
     'content': fields.String(required=False, description='反思内容'),
     'plan_id': fields.Integer(required=False, description='反思的计划ID'),
 
 })
-delete_model = reflection_ns.model('delete', {
-    'id': fields.Integer(required=True, description='反思记录ID')
-})
+
 paper_parser = reflection_ns.parser()
 paper_parser.add_argument('plan_id', type=int, required=False, help='请输入反思计划ID')
 paper_parser.add_argument('content', type=str, required=False, help='请输入反思内容')
@@ -27,11 +21,11 @@ paper_parser.add_argument('update_time', type=str, required=False, help='请输�
 paper_parser.add_argument('page', type=int, required=False, default=1  ,help='页码')
 paper_parser.add_argument('page_size', type=int, required=False, default=10 ,help='每页条数')
 
-@reflection_ns.route('/')
+@reflection_ns.route('/<string:id>')
 class Reflection(Resource):
 
     @reflection_ns.expect(reflection_model)
-    def post(self):
+    def post(self,id):
         """添加反思记录"""
         try:
             data = request.get_json()
@@ -41,29 +35,29 @@ class Reflection(Resource):
         except Exception as e:
             return Response.SEVER_ERROR(e)
         
-    @reflection_ns.expect(delete_model)
-    def delete(self):
+    
+    def delete(self,id):
         """删除反思记录"""
         try:
-            data = request.get_json()
-            id = data.get('id')
-            if not data or not id:
+            if not id:
                 return Response.NOT_FOUND("id不能为空")
             return reflectionService().delete(id)
         except Exception as e:
             return Response.SEVER_ERROR(e)
 
-    @reflection_ns.expect(update_model)
-    def put(self):
+    @reflection_ns.expect(reflection_model)
+    def put(self,id):
         """更新反思记录"""
         try:
             data = request.get_json()
-            if not data or not data.get('id'):
+            if not data or not id:
                 return Response.NOT_FOUND("id不能为空")
-            return reflectionService().update(data)
+            return reflectionService().update(id,data)
         except Exception as e:
             return Response.SEVER_ERROR(e)
         
+@reflection_ns.route('/')
+class ReflectionDetail(Resource):
     @reflection_ns.expect(paper_parser)
     def get(self):
         """获取反思记录列表"""

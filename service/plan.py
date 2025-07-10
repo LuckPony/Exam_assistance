@@ -39,11 +39,11 @@ class PlanService:
         except Exception as e:
             return Response.SEVER_ERROR(e)
         
-    def update(self, data):
+    def update(self, id,data):
         try:
-            print(data)
+            
             plan = self.create_plan_object(data)
-            plan.id = data.get('id')
+            plan.id = id
             res = update_plan(plan)
             if not res:
                 return Response.NOT_FOUND('没有该计划')

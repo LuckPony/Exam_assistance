@@ -7,20 +7,18 @@ from utils.response import Response
 
 user_ns = Namespace('api/user', description='用户管理')
 
-user_model = user_ns.model('User', {
+register_model = user_ns.model('register', {
     'username': fields.String(required=True, description='用户名'),
     'password': fields.String(required=True, description='密码'),
     'email': fields.String(required=False, description='邮箱'),
     'phone': fields.String(required=False, description='手机号'),
 })
-login_model = user_ns.model('Login', {
+login_model = user_ns.model('login', {
     'username': fields.String(required=True, description='用户名'),
     'password': fields.String(required=True, description='密码'),
 })
-delete_model = user_ns.model('Delete', {
-    'id': fields.Integer(required=True, description='用户ID'),
-})
-update_model = user_ns.model('Update', {
+
+user_model = user_ns.model('user', {
     'id': fields.Integer(required=True, description='用户ID'),
     'username': fields.String(required=True, description='用户名'),
     'password': fields.String(required=True, description='密码'),
@@ -37,7 +35,7 @@ paper_parser.add_argument('size', type=int, required=False,default=10 ,help='每
 
 @user_ns.route('/register')
 class UserRegister(Resource):
-    @user_ns.expect(user_model)
+    @user_ns.expect(register_model)
     def post(self):
         """用户注册"""
         try:
@@ -61,30 +59,29 @@ class UserLogin(Resource):
         except Exception as e:
             return Response.SEVER_ERROR(e)
         
-@user_ns.route('/')
+@user_ns.route('/<string:id>')
 class User(Resource):
-    @user_ns.expect(delete_model)
-    def delete(self):
+    def delete(self,id):
         """删除用户"""
         try:
-            data = request.get_json()
-            id = data.get('id')
             if not id:
                 return Response.NOT_FOUND("用户ID为空")
             return UserService().delete(id)
         except Exception as e:
             return Response.SEVER_ERROR(e)
 
-    @user_ns.expect(update_model)
-    def put(self):
+    @user_ns.expect(user_model)
+    def put(self,id):
         """更新用户"""
         try:
             data = request.get_json()
-            if not data or not data.get('id'):
+            if not data or not id:
                 return Response.NOT_FOUND("要修改的用户ID为空")
-            return UserService().update(data)
+            return UserService().update(id,data)
         except Exception as e:
             return Response.SEVER_ERROR(e)
+@user_ns.route('/')
+class UserDetail(Resource):
     @user_ns.expect(paper_parser)
     def get(self):
         """获取用户列表"""

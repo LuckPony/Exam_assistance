@@ -36,12 +36,12 @@ class reflectionService:
         except Exception as e:
             return Response.SEVER_ERROR(e)
     
-    def update(self,data):
+    def update(self,id,data):
         try:
-            if not data or not data.get('id'):
+            if not data or not id:
                 return Response.NOT_FOUND('反思记录id不能为空')
             reflection = self.create_reflection_object(data)
-            reflection.id = data.get('id')
+            reflection.id = id
             res = update_reflection(reflection)
             if not res:
                 return Response.NOT_FOUND('该反思记录不存在')

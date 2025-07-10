@@ -52,10 +52,10 @@ class UserService:
         except Exception as e:
             return Response.SEVER_ERROR(e)
         
-    def update(self,data):
+    def update(self,id,data):
         try:
             user = self.create_user_object(data) #创建用户对象时id是自动生成的
-            user.id = data.get('id')
+            user.id = id
             res = update_user(user)
             if res == None: 
                 return Response.NOT_FOUND("用户不存在")
@@ -71,7 +71,7 @@ class UserService:
                 return Response.NOT_FOUND("没有用户符合条件")
             if isinstance(user, Exception):
                 return Response.SEVER_ERROR(user)
-            return Response.SUCCESS(f"用户查询成功{user}")
+            return Response.SUCCESS(user)
         except Exception as e:
             return Response.SEVER_ERROR(e)
 
