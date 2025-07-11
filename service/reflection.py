@@ -11,6 +11,7 @@ class reflectionService:
         return PlanReflection(
             content = data.get('content'),
             plan_id = data.get('plan_id'),
+            user_id = data.get('user_id'),
         )
 
     def add(self, data):

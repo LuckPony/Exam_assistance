@@ -8,6 +8,7 @@ class Plan(db.Model):
      finished:计划是否完成
      begin_time:计划开始时间
      deal_time:计划截止时间
+     user_id:计划创建者id
      create_time:创建时间
      update_time:更新时间
     
@@ -21,6 +22,7 @@ class Plan(db.Model):
     update_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
     deal_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
     begin_time = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
+    user_id = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
         return '<Plan %r>' % self.id
@@ -35,5 +37,6 @@ class Plan(db.Model):
             'deal_time': self.deal_time,
             'create_time': self.create_time,
             'update_time': self.update_time,
+            'user_id': self.user_id,
             
         }

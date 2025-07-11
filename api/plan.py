@@ -14,15 +14,19 @@ plan_model = plan_ns.model('plan', {
     'begin_time': fields.DateTime(required=False, description='计划开始时间'),
     'deal_time': fields.DateTime(required=False, description='计划截止时间'),
     'finished': fields.Boolean(required=False,default=False,description='计划是否完成'),
+    'user_id': fields.Integer(required=False, description='用户ID'),
 })
 
 paper_parser = plan_ns.parser()
+
 paper_parser.add_argument('planname', type=str, required=False, help='计划名称')
 paper_parser.add_argument('begin_time', type=str, required=False, help='计划开始时间')
 paper_parser.add_argument('deal_time', type=str, required=False, help='计划截止时间')
 paper_parser.add_argument('finished', type=bool, required=False,default=False ,help='计划是否完成')
+paper_parser.add_argument('user_id', type=int, required=False, help='计划所有者id')
 paper_parser.add_argument('page', type=int, required=False, default=1  ,help='页码')
 paper_parser.add_argument('size', type=int, required=False, default=10 ,help='每页数量')
+
 
 @plan_ns.route('/<string:id>')
 class Plan(Resource):

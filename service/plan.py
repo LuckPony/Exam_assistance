@@ -13,6 +13,7 @@ class PlanService:
             begin_time =  datetime.datetime.fromisoformat(data.get('begin_time').replace('Z', '')),
             deal_time =  datetime.datetime.fromisoformat(data.get('deal_time').replace('Z', '')),
             finished = data.get('finished'),
+            user_id = data.get('user_id')
         )
     
     def add(self, data):

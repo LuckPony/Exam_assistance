@@ -10,6 +10,7 @@ reflection_model = reflection_ns.model('reflection', {
     'id': fields.Integer(required=False,default = 0, description='反思记录ID'),
     'content': fields.String(required=False, description='反思内容'),
     'plan_id': fields.Integer(required=False, description='反思的计划ID'),
+    'user_id': fields.Integer(required=False, description='反思的用户ID'),
 
 })
 
@@ -18,6 +19,7 @@ paper_parser.add_argument('plan_id', type=int, required=False, help='请输入�
 paper_parser.add_argument('content', type=str, required=False, help='请输入反思内容')
 paper_parser.add_argument('create_time', type=str, required=False, help='请输入反思创建时间')
 paper_parser.add_argument('update_time', type=str, required=False, help='请输入反思更新时间')
+paper_parser.add_argument('user_id', type=int, required=False, help='请输入用户ID')
 paper_parser.add_argument('page', type=int, required=False, default=1  ,help='页码')
 paper_parser.add_argument('page_size', type=int, required=False, default=10 ,help='每页条数')
 

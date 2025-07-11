@@ -5,7 +5,7 @@ from api import api
 from flask_cors import CORS
 def create_app():
     app = Flask(__name__)
-    CORS(app)
+    CORS(app)   #做跨域处理，前后端代理使用
     app.config.from_object(SQLConfig)
     db.init_app(app)
     api.init_app(app)
