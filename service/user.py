@@ -37,7 +37,7 @@ class UserService:
                 return Response.SEVER_ERROR(user)
             if not user: 
                 return Response.NOT_FOUND("用户不存在")
-            return Response.SUCCESS(f"用户登录成功{user}")
+            return Response.SUCCESS(user)
         except Exception as e:
             return Response.SEVER_ERROR(e)
         
