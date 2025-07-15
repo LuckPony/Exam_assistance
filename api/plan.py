@@ -27,6 +27,11 @@ paper_parser.add_argument('user_id', type=int, required=False, help='计划所�
 paper_parser.add_argument('page', type=int, required=False, default=1  ,help='页码')
 paper_parser.add_argument('size', type=int, required=False, default=10 ,help='每页数量')
 
+paper_parser2 = plan_ns.parser()
+paper_parser2.add_argument('begin_month', type=str, required=False, help='计划开始月份')
+paper_parser2.add_argument('deal_month', type=str, required=False, help='计划截止月份')
+paper_parser2.add_argument('user_id', type=int, required=False, default=1  ,help='计划所有者id')
+
 
 @plan_ns.route('/<string:id>')
 class Plan(Resource):
@@ -77,4 +82,17 @@ class PlanDeatil(Resource):
         except Exception as e:
             return Response.SEVER_ERROR(e)
 
+@plan_ns.route('/getByData')
+class PlanFuzzyInquiry(Resource):  #模糊查询
+    @plan_ns.expect(paper_parser2)
+    def get(self):
+        """根据时间模糊查询获取计划列表"""
+        try:
+            args = paper_parser2.parse_args()
+            begin_month = args.get('begin_month')
+            deal_month = args.get('deal_month')
+            user_id = args.get('user_id')
+            return PlanService().getPlanByData(begin_month,deal_month,user_id)
+        except Exception as e:
+            return Response.SEVER_ERROR(e)
 

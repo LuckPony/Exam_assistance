@@ -64,3 +64,13 @@ class PlanService:
             return Response.SUCCESS(res)
         except Exception as e:
             return Response.SEVER_ERROR(e)
+    def getPlanByData(self,begin_month,deal_month,user_id):
+        try:
+            res = get_plan_by_data(begin_month,deal_month,user_id)
+            if res is None:
+                return Response.NOT_FOUND('没有计划')
+            return Response.SUCCESS(res)
+            if isinstance(res, Exception):
+                return Response.SEVER_ERROR(res)
+        except Exception as e:
+            return Response.SEVER_ERROR(e)

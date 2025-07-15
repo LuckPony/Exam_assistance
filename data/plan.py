@@ -1,3 +1,4 @@
+from sqlalchemy import func
 from entity import *
 from entity.plan import Plan
 
@@ -45,9 +46,37 @@ def get_plan(filters:dict,page:int = None,page_size:int = None):
             page = int(page)
         if page_size:
             page_size = int(page_size)
-        res = res.paginate(page=page,per_page=page_size).items
+    
         r = []
         for i in res:
+            r.append(i.to_dict())
+        return r
+    except Exception as e:
+        return e
+    
+def get_plan_by_data(begin_month,deal_month,user_id):
+    try:
+        plans = Plan.query.filter_by(user_id=user_id)
+        
+        if begin_month and deal_month:
+            plans = plans.filter(
+                func.month(Plan.begin_time) == int(begin_month),
+                func.month(Plan.deal_time) == int(deal_month),
+                )
+            print(plans)
+        elif deal_month and not begin_month:
+            plans = plans.filter(
+                func.month(Plan.deal_time) == int(deal_month)
+                )
+        elif begin_month and not deal_month:
+            plans = plans.filter(
+                func.month(Plan.begin_time) == int(begin_month),
+                )
+        plans = plans.all()
+        if not plans:
+            return None
+        r = []
+        for i in plans:
             r.append(i.to_dict())
         return r
     except Exception as e:
