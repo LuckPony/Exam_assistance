@@ -7,11 +7,17 @@ class PlanService:
     def __init__(self):
         pass
     def create_plan_object(self, data):  #这里创建对象只是为了更好传信息，所以无用字段可不加
+        begin_time = ""
+        deal_time =  ""
+        if data.get('begin_time'):
+            begin_time =  datetime.datetime.fromisoformat(data.get('begin_time').replace('Z', ''))
+        if data.get('deal_time'):
+            deal_time =  datetime.datetime.fromisoformat(data.get('deal_time').replace('Z', ''))
         return Plan(
             planname = data.get('planname'),
             description = data.get('description'),
-            begin_time =  datetime.datetime.fromisoformat(data.get('begin_time').replace('Z', '')),
-            deal_time =  datetime.datetime.fromisoformat(data.get('deal_time').replace('Z', '')),
+            begin_time = begin_time,
+            deal_time =  deal_time,
             finished = data.get('finished'),
             user_id = data.get('user_id')
         )
