@@ -1,9 +1,9 @@
 class SQLConfig:
     # Database connection details
-    DB_HOST = "localhost"
+    DB_HOST = "113.44.59.175"
     DB_PORT= 3306
     DB_USER = "root"
-    DB_PASSWORD = "123456"
+    DB_PASSWORD = "root@2233"
     DB_NAME = "examAssistance"
 
     #SQLAlchemy URI拼接
